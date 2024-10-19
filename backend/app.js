@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var dbAuth = require('./dbdata');
+var cors = require('cors');
 
 
 var mongoDB = 'mongodb+srv://' + dbAuth +'@cluster0.kriej.mongodb.net/SportSpace?retryWrites=true&w=majority&appName=Cluster0';
@@ -24,6 +25,26 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
+var allowedOrigins = ['http://localhost:4200', 
+  'http://localhost:4100', 
+  'http://localhost:3000'];
+
+app.use(cors({
+credentials: true,
+origin: function(origin, callback){
+// allow requests with no origin 
+// (like mobile apps or curl requests)
+if(!origin) return callback(null, true);
+if(allowedOrigins.indexOf(origin) === -1){
+var msg = 'The CORS policy for this site does not ' +
+'allow access from the specified Origin.';
+return callback(new Error(msg), false);
+}
+return callback(null, true);
+}
+}));
+
 
 app.use(logger('dev'));
 app.use(express.json());
