@@ -6,6 +6,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Footer from './components/footer';
+import Login from './components/login';
+import Register from './components/register';
+import { UserProvider } from './components/userContext';
 
 function App() {
   const [venues, setVenues] = useState([]);
@@ -30,14 +33,18 @@ function App() {
   }, []);
   return (
     <div className="App">
+      <UserProvider>
         <Router>
-        <Header/>
-          <Routes>
-            <Route path="/" element={<Home venues={recommendedVenues} />} />
-            <Route path='/venues' element={<Venues venues={venues} />} />
-          </Routes>
+          <Header/>
+            <Routes>
+              <Route path="/" element={<Home venues={recommendedVenues} />} />
+              <Route path='/venues' element={<Venues venues={venues} />} />
+              <Route path="/register" element={<Register/>} />
+              <Route path="/login" element={<Login />} />
+            </Routes>
           <Footer />
         </Router>
+      </UserProvider>
     </div>
   );
 }

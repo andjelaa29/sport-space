@@ -48,7 +48,8 @@ module.exports = {
             const User = new UserModel({
                 username : req.body.username,
                 password : req.body.password,
-                name : req.body.name
+                email : req.body.email,
+                phone : req.body.phone
             });
     
             const savedUser = await User.save();
@@ -63,7 +64,7 @@ module.exports = {
     login: async function (req, res, next) {
         try {
             const user = await UserModel.authenticate(req.body.username, req.body.password);
-            
+            console.log(user);
             if (!user) {
                 const err = new Error("Wrong username or password");
                 err.status = 401;
@@ -79,7 +80,7 @@ module.exports = {
         } catch(err) {
             return res.status(500).json({
                 message: 'Error during login',
-                error: error
+                error: err.message
             });
         }
     },
@@ -101,7 +102,8 @@ module.exports = {
 
             User.username = req.body.username ? req.body.username : User.username;
 			User.password = req.body.password ? req.body.password : User.password;
-			User.name = req.body.name ? req.body.name : User.name;
+			User.email = req.body.email ? req.body.email : User.email;
+            User.phone = req.body.phone ? req.body.phone : User.phone;
 			
             const updatedUser = await User.save();
             return res.json(updatedUser);

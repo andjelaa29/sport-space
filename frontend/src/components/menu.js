@@ -2,9 +2,11 @@ import React from 'react';
 import { AppBar, Toolbar, Box, Button, Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from './userContext';
 
 const MenuComponent = () => {
   const [anchorElAuth, setAnchorElAuth] = useState(null);
+  const { userName, setUserName } = useUser();
 
   const navigate = useNavigate();
 
@@ -14,6 +16,22 @@ const MenuComponent = () => {
 
   const handleClose = () => {
     setAnchorElAuth(null);
+  };
+
+  const handleLoginClick = () => {
+    handleClose();
+    navigate('/login'); 
+  };
+
+  const handleRegisterClick = () => {
+    handleClose();
+    navigate('/register'); 
+  };
+
+  const handleLogout = () => {
+    setUserName(null); 
+    handleClose();
+    navigate('/');
   };
 
   return (
@@ -56,26 +74,33 @@ const MenuComponent = () => {
                 About
             </Button>
             </Box>
-            <Button color="inherit" sx={{fontSize: '18px'}} onClick={handleAuthMenuClick}>Login/Register</Button>
+            {userName ? (
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <span style={{ color: '#fff', marginRight: '8px' }}>{userName}</span>
+                <Button color="inherit" onClick={handleLogout}>Logout</Button>
+              </Box>
+              ) : (
+              <Button color="inherit" sx={{fontSize: '18px'}} onClick={handleAuthMenuClick}>Login/Register</Button>
+              )}
             <Menu
-            anchorEl={anchorElAuth}
-            open={Boolean(anchorElAuth)}
-            onClose={handleClose}
-            MenuListProps={{
-              sx: {
-                backgroundColor: '#121010', 
-                color: '#fff', 
-              }
-            }}
+              anchorEl={anchorElAuth}
+              open={Boolean(anchorElAuth)}
+              onClose={handleClose}
+              MenuListProps={{
+                sx: {
+                  backgroundColor: '#121010', 
+                  color: '#fff', 
+                }
+              }}
             >
-                <MenuItem onClick={handleClose} sx={{
+                <MenuItem onClick={handleLoginClick} sx={{
               '&:hover': {
                 backgroundColor: '#9e181f', 
               },
               color: '#fff',
               fontSize: '18px'
             }}>Login</MenuItem>
-                <MenuItem onClick={handleClose} sx={{
+                <MenuItem onClick={handleRegisterClick} sx={{
               '&:hover': {
                 backgroundColor: '#9e181f', 
               },
