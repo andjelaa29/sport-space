@@ -5,9 +5,8 @@ import Welcome from './welcome';
 import RecommendedVenues from './recommendedVenues'; 
 import {useNavigate} from 'react-router-dom';
 
-const Home = () => {
+const Home = ({venues}) => {
     const navigate = useNavigate();
-    const [venues, setVenues] = useState([]);
 
     const handleReserveNowClick = () => {
         navigate('/venues');

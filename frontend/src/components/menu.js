@@ -1,9 +1,12 @@
 import React from 'react';
 import { AppBar, Toolbar, Box, Button, Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const MenuComponent = () => {
   const [anchorElAuth, setAnchorElAuth] = useState(null);
+
+  const navigate = useNavigate();
 
   const handleAuthMenuClick = (event) => {
     setAnchorElAuth(event.currentTarget);
@@ -25,6 +28,7 @@ const MenuComponent = () => {
                     flexGrow: 1, 
                     margin: '0 8px',
                 }}
+                onClick={() => navigate('/')}
             >
                 Home
             </Button>
@@ -36,6 +40,7 @@ const MenuComponent = () => {
                     flexGrow: 1, 
                     margin: '0 8px',
                  }}
+                 onClick={() => navigate('/venues')}
             >
                 Venues
             </Button>
@@ -56,9 +61,27 @@ const MenuComponent = () => {
             anchorEl={anchorElAuth}
             open={Boolean(anchorElAuth)}
             onClose={handleClose}
+            MenuListProps={{
+              sx: {
+                backgroundColor: '#121010', 
+                color: '#fff', 
+              }
+            }}
             >
-                <MenuItem onClick={handleClose}>Login</MenuItem>
-                <MenuItem onClick={handleClose}>Register</MenuItem>
+                <MenuItem onClick={handleClose} sx={{
+              '&:hover': {
+                backgroundColor: '#9e181f', 
+              },
+              color: '#fff',
+              fontSize: '18px'
+            }}>Login</MenuItem>
+                <MenuItem onClick={handleClose} sx={{
+              '&:hover': {
+                backgroundColor: '#9e181f', 
+              },
+              color: '#fff',
+              fontSize: '18px'
+            }}>Register</MenuItem>
             </Menu>
       </Toolbar>
     </AppBar>
