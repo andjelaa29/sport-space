@@ -65,7 +65,7 @@ module.exports = {
                 description : req.body.description,
                 availability : req.body.availability
             });
-    
+
             const savedVenue = await Venue.save();
             return res.status(201).json(savedVenue);
             

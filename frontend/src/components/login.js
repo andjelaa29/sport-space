@@ -7,14 +7,14 @@ import { useNavigate } from 'react-router-dom';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { setUserName } = useUser(); 
+  const { setUserName, setUserId } = useUser(); 
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3000/users/login', { username, password });
-      console.log(response.data);
+      setUserId(response.data._id);
       setUserName(response.data.username); 
       navigate('/');
     } catch (error) {

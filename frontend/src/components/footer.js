@@ -8,10 +8,11 @@ const Footer = () => {
         backgroundColor: '#121010',
         color: '#fcfcfc',
         padding: '20px',
-        position: 'fixed',
+        position: 'relative',
         bottom: 0,
+        left: 0,
+        right: 0,
         textAlign: 'center',
-        width: '100%'
       }}
     >
       <Typography variant="body2">

@@ -1,4 +1,5 @@
 var ReservationModel = require('../models/ReservationModel.js');
+var VenueModel = require('../models/VenueModel.js');
 
 module.exports = {
 
@@ -16,6 +17,21 @@ module.exports = {
             });
         }
     },
+    displayMyReservations: async function (req, res) {
+        const userId = req.user.id; 
+        
+        try {
+          const reservations = await db.query(
+            'SELECT * FROM reservations WHERE user_id = $1', 
+            [userId]
+          );
+          res.json(reservations.rows);
+        } catch (err) {
+          console.error(err);
+          res.status(500).send('Server error');
+        }
+      },
+      
 
     /**
      * ReservationController.show()
@@ -53,11 +69,20 @@ module.exports = {
                 end_time: req.body.end_time
             });
             const savedReservation = await Reservation.save();
+
+            const { venue_id, date, start_time, end_time } = req.body;
+            // delete available_slots from Venue
+            await VenueModel.updateOne(
+                { _id: venue_id, 'availability.date': date },
+                { $pull: { 'availability.$.available_slots': { start_time, end_time } } }
+            );
+        
             return res.status(201).json(savedReservation);
         } catch (err) {
+            console.error(err); 
             return res.status(500).json({
                 message: 'Error when creating Reservation',
-                error: err
+                error: err,
             });
         }
     },

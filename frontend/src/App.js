@@ -9,6 +9,10 @@ import Footer from './components/footer';
 import Login from './components/login';
 import Register from './components/register';
 import { UserProvider } from './components/userContext';
+import VenueDetails from './components/venueDetails';
+
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 function App() {
   const [venues, setVenues] = useState([]);
@@ -34,6 +38,7 @@ function App() {
   return (
     <div className="App">
       <UserProvider>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Router>
           <Header/>
             <Routes>
@@ -41,9 +46,11 @@ function App() {
               <Route path='/venues' element={<Venues venues={venues} />} />
               <Route path="/register" element={<Register/>} />
               <Route path="/login" element={<Login />} />
+              <Route path="/venues/:id" element={<VenueDetails />} />
             </Routes>
           <Footer />
         </Router>
+        </LocalizationProvider>
       </UserProvider>
     </div>
   );

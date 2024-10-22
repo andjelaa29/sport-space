@@ -77,6 +77,7 @@ const MenuComponent = () => {
             {userName ? (
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <span style={{ color: '#fff', marginRight: '8px' }}>{userName}</span>
+                <Box sx={{ width: '1px', height: '24px', backgroundColor: '#fff', margin: '0 8px' }} />
                 <Button color="inherit" onClick={handleLogout}>Logout</Button>
               </Box>
               ) : (

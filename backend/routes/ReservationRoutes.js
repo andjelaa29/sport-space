@@ -6,6 +6,7 @@ var ReservationController = require('../controllers/ReservationController.js');
  * GET
  */
 router.get('/', ReservationController.list);
+router.get('/my-reservations', ReservationController.displayMyReservations);
 
 /*
  * GET

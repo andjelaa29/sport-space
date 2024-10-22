@@ -56,10 +56,10 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-  secret: 'your_secret_key', // Replace with a strong secret
+  secret: 'secret_key', 
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false } // Set to true if using HTTPS
+  cookie: { secure: false } 
 }));
 
 app.use('/', indexRouter);
