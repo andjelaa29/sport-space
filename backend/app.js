@@ -28,6 +28,24 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+var MongoStore = require('connect-mongo');
+app.use(session({
+  secret: 'secret_key', 
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 }, // 1 day in milliseconds 
+  store: MongoStore.create({ mongoUrl: mongoDB }) 
+}));
+
+
+app.use((req, res, next) => {
+  if (req.session && req.session.userId) {
+    req.user = { id: req.session.userId }; 
+    console.log('User ID set on req.user:', req.user.id);
+  }
+  next();
+});
+
 var allowedOrigins = ['http://localhost:4200', 
   'http://localhost:4100', 
   'http://localhost:3000'];
@@ -54,13 +72,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(session({
-  secret: 'secret_key', 
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false } 
-}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema   = mongoose.Schema;
 
 var AvailabilitySchema = new Schema({
-    date: Date,
+    date: String,
     available_slots: [
         {
             start_time: String, 

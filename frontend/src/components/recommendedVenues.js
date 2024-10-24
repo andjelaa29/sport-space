@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const RecommendedVenues = ({venues}) => {
 
   return (
-    <Box sx={{ padding: '20px', backgroundColor: '#9e181f' }}>
+    <Box sx={{ padding: '20px', backgroundColor: '#9e181f', marginBottom: '10px' }}>
       <Typography variant="h5" sx={{ marginBottom: '20px', textAlign: 'center', color: '#fcfcfc' }}>
         Recommended
       </Typography>

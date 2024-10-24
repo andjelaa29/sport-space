@@ -21,11 +21,8 @@ module.exports = {
         const userId = req.user.id; 
         
         try {
-          const reservations = await db.query(
-            'SELECT * FROM reservations WHERE user_id = $1', 
-            [userId]
-          );
-          res.json(reservations.rows);
+          const reservations = await ReservationModel.find({user_id: userId}).populate('venue_id', 'name'); // display name from Venue model
+          res.json(reservations);
         } catch (err) {
           console.error(err);
           res.status(500).send('Server error');
@@ -64,19 +61,20 @@ module.exports = {
             const Reservation = new ReservationModel({
                 venue_id: req.body.venue_id,
                 user_id: req.body.user_id,
-                date: req.body.date,
+                date: req.body.date.trim(),
                 start_time: req.body.start_time,
                 end_time: req.body.end_time
             });
             const savedReservation = await Reservation.save();
 
             const { venue_id, date, start_time, end_time } = req.body;
+
             // delete available_slots from Venue
-            await VenueModel.updateOne(
+            const result = await VenueModel.updateOne(
                 { _id: venue_id, 'availability.date': date },
                 { $pull: { 'availability.$.available_slots': { start_time, end_time } } }
             );
-        
+
             return res.status(201).json(savedReservation);
         } catch (err) {
             console.error(err); 

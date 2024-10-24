@@ -3,10 +3,11 @@ import { AppBar, Toolbar, Box, Button, Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from './userContext';
+import { Link } from 'react-router-dom';
 
 const MenuComponent = () => {
   const [anchorElAuth, setAnchorElAuth] = useState(null);
-  const { userName, setUserName } = useUser();
+  const { userName, setUserName, logout } = useUser();
 
   const navigate = useNavigate();
 
@@ -29,7 +30,7 @@ const MenuComponent = () => {
   };
 
   const handleLogout = () => {
-    setUserName(null); 
+    logout();
     handleClose();
     navigate('/');
   };
@@ -76,7 +77,9 @@ const MenuComponent = () => {
             </Box>
             {userName ? (
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <span style={{ color: '#fff', marginRight: '8px' }}>{userName}</span>
+                <Link to="/profile" style={{ color: '#fff', textDecoration: 'none', marginRight: '8px' }}>
+                  <span>{userName}</span>
+                </Link>
                 <Box sx={{ width: '1px', height: '24px', backgroundColor: '#fff', margin: '0 8px' }} />
                 <Button color="inherit" onClick={handleLogout}>Logout</Button>
               </Box>

@@ -64,7 +64,6 @@ module.exports = {
     login: async function (req, res, next) {
         try {
             const user = await UserModel.authenticate(req.body.username, req.body.password);
-            console.log(user);
             if (!user) {
                 const err = new Error("Wrong username or password");
                 err.status = 401;

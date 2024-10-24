@@ -4,6 +4,7 @@ import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
 import SportsHandballIcon from '@mui/icons-material/SportsHandball';
 import SportsVolleyballIcon from '@mui/icons-material/SportsVolleyball';
+import { Link } from 'react-router-dom';
 
 
 const Venues = ({venues}) => {
@@ -77,35 +78,37 @@ const Venues = ({venues}) => {
       <Grid container spacing={2}>
         {filteredVenues.map((venue) => (
           <Grid item xs={12} sm={6} md={4} key={venue.id}>
-            <Card sx={{ height: '100%', backgroundColor: '#9e181f' }}>
-              <CardMedia
-                component="img"
-                height="250"
-                image={venue.image}
-                alt={venue.name}
-              />
-              <CardContent>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Box>
-                        <Typography variant="h5" component="div" color= "#fcfcfc">
-                        {venue.name}
-                        </Typography>
-                        <Typography variant="body2" color="#fcfcfc">
-                        City: {venue.city}
-                        </Typography>
-                        <Typography variant="body2" color="#fcfcfc">
-                        Sport: {venue.sport.join(', ')}
-                        </Typography>
-                    </Box>
-                    <Button
-                        variant="contained"
-                        sx={{ backgroundColor: '#fcfcfc', color: '#9e181f', marginLeft: '16px', fontWeight: 'bold' }}
-                    >
-                        Reserve
-                    </Button>
-                </Box>
-              </CardContent>
-            </Card>
+            <Link to={`/venues/${venue._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Card sx={{ height: '100%', backgroundColor: '#9e181f' }}>
+                <CardMedia
+                  component="img"
+                  height="250"
+                  image={venue.image}
+                  alt={venue.name}
+                />
+                <CardContent>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Box>
+                          <Typography variant="h5" component="div" color= "#fcfcfc">
+                          {venue.name}
+                          </Typography>
+                          <Typography variant="body2" color="#fcfcfc">
+                          City: {venue.city}
+                          </Typography>
+                          <Typography variant="body2" color="#fcfcfc">
+                          Sport: {venue.sport.join(', ')}
+                          </Typography>
+                      </Box>
+                      <Button
+                          variant="contained"
+                          sx={{ backgroundColor: '#fcfcfc', color: '#9e181f', marginLeft: '16px', fontWeight: 'bold' }}
+                      >
+                          Reserve
+                      </Button>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Link>
           </Grid>
         ))}
       </Grid>

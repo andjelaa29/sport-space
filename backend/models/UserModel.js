@@ -21,9 +21,7 @@ UserSchema.statics.authenticate = async function(username, password){
 		}
 
 		const result = await bcrypt.compare(password, user.password);
-		console.log(result);
 		if (result) {
-			console.log('Password match successful for user:', user.username);
 			return user; 
 		} else {
 			const err = new Error("Wrong password");

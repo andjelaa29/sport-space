@@ -2,6 +2,7 @@ import './App.css';
 import Header from './components/header';
 import Home from './components/home';
 import Venues from './components/venues';
+import Profile from './components/profile';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -17,7 +18,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 function App() {
   const [venues, setVenues] = useState([]);
   const [recommendedVenues, setRecommendedVenues] = useState([]);
-
+  
   useEffect(() => {
     const fetchVenues = async () => {
       try {
@@ -25,7 +26,11 @@ function App() {
         setVenues(response.data); 
 
         const sortedVenues = response.data
-          .sort((a, b) => a.availability.length - b.availability.length)
+          .sort((a, b) => {
+            const totalSlotsA = a.availability.reduce((acc, item) => acc + item.available_slots.length, 0); //sum all available_slots 
+            const totalSlotsB = b.availability.reduce((acc, item) => acc + item.available_slots.length, 0);
+            return totalSlotsB - totalSlotsA;
+          })
           .slice(0, 3);
         setRecommendedVenues(sortedVenues); // Store recommended venues
       } catch (error) {
@@ -47,6 +52,7 @@ function App() {
               <Route path="/register" element={<Register/>} />
               <Route path="/login" element={<Login />} />
               <Route path="/venues/:id" element={<VenueDetails />} />
+              <Route path='/profile' element={<Profile />} />
             </Routes>
           <Footer />
         </Router>
