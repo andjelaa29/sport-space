@@ -71,6 +71,7 @@ const MenuComponent = () => {
                     flexGrow: 1, 
                     margin: '0 8px',
                  }}
+                 onClick={() => navigate('/about')}
             >
                 About
             </Button>

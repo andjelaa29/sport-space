@@ -14,6 +14,7 @@ import VenueDetails from './components/venueDetails';
 
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import About from './components/about';
 
 function App() {
   const [venues, setVenues] = useState([]);
@@ -53,6 +54,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/venues/:id" element={<VenueDetails />} />
               <Route path='/profile' element={<Profile />} />
+              <Route path='/about' element={<About />} />
             </Routes>
           <Footer />
         </Router>
